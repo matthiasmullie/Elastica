@@ -46,10 +46,10 @@ class Index implements SearchableInterface
     {
         $this->_client = $client;
 
-        if (!is_string($name)) {
-            throw new InvalidException('Index name should be of type string');
+        if (!is_scalar($name)) {
+            throw new InvalidException('Index name should be a scalar type');
         }
-        $this->_name = $name;
+        $this->_name = (string) $name;
     }
 
     /**
@@ -314,7 +314,7 @@ class Index implements SearchableInterface
      */
     public function open()
     {
-        $this->request('_open', Request::POST);
+        return $this->request('_open', Request::POST);
     }
 
     /**
