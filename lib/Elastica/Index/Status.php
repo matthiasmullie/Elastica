@@ -86,8 +86,15 @@ class Status
      */
     public function getAliases()
     {
-        $responseData = $this->getIndex()->request('_aliases', \Elastica\Request::GET)->getData();
-        return array_keys($responseData[$this->getIndex()->getName()]['aliases']);
+        $responseData = $this->getIndex()->request('_alias/*', \Elastica\Request::GET)->getData();
+		
+		$aliases = array();
+		
+		if (array_key_exists($this->getIndex()->getName(), $responseData)) {
+			$aliases = array_keys($responseData[$this->getIndex()->getName()]['aliases']);
+		}
+		
+        return $aliases;
     }
 
     /**
